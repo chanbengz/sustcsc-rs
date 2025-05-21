@@ -1,0 +1,18 @@
+[book]
+authors = ["Ben Chen"]
+language = "en"
+multilingual = false
+src = "src"
+title = "SUSTCSC 2025 RUST"
+
+[output.html]
+mathjax-support = true
+git-repository-url = "https://github.com/chanbengz/sustcsc-rs"
+edit-url-template = "https://github.com/chanbengz/sustcsc-rs/edit/master/{path}"
+
+[output.html.search]
+use-boolean-and = true
+
+[output.html.fold]
+enable = true
+level = 0
