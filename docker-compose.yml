@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  challenge:
+    image: rust:1.87.0-bookworm
+    working_dir: /root/challenge
+    volumes:
+      - ./challenge:/root/challenge
+    command: >
+      bash -c "cargo build --release && cargo run --release"
+    environment:
+      - RUST_BACKTRACE=1
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+
+  # Development shell service for interactive development
+  dev:
+    image: rust:1.87.0-bookworm
+    working_dir: /usr/src/challenge
+    volumes:
+      - ./challenge:/root/challenge
+    command: bash
+    stdin_open: true
+    tty: true
+    environment:
+      - RUST_BACKTRACE=1
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G

@@ -1,1 +1,1 @@
-# [SUSTCSC '25] Rust
+# [SUSTCSC '25] Rust in HPC

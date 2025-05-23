@@ -1,0 +1,8 @@
+# Optimizing Rust
+
+## Parallelism
+
+
+
+## SIMD
+
