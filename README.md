@@ -8,16 +8,18 @@
 ## Structure
 
 In this repos you'll find:
-- [Starter's Code](./challenge): LLL algorithm attack on LWE
+- [Starter's Code](./challenge):  LWE challenge with a sample BKW solver.
 - [Handout](./handout): CI/CD will automatically build sites with `mdbook`, so you find it [here](https://sustcsc25.benx.dev).
 
 ## Description
 
 Learning With Errors (LWE) is a hard problem in lattice-based cryptography invented for the post-quantum era.
 The LWE problem is to find a secret vector $\mathbf{s} \in \mathbb{Z}_q^n$ given a set of noisy linear equations of the form
+
 $$
 \mathbf{A} \cdot \mathbf{s} + e = b \mod q
 $$
+
 where $\mathbf{A} \in \mathbb{Z}_q^{m \times n}$ is a matrix, $e$ is a noise vector,
  and $b$ is the result vector. We call $\mathbf{A}$ the lattice basis, $e$ the noise, and $b$ the ciphertext. The LWE problem is hard to solve when the noise is small compared to the modulus $q$.
 
@@ -54,9 +56,9 @@ TBD
 
 TBD
 
-### Accuracy
+### Grading
 
-If the result has $\epsilon \geq \alpha$, we will consider it as a failure.
+TBD
 
 ## Submission
 
@@ -89,5 +91,5 @@ And it may include:
 
 ## Reference
 
-[Numerical Computing with Rust on CPU](https://plmlab.math.cnrs.fr/grasland/numerical-rust-cpu)
-[LWE Challenge by TU Darmstadt](https://www.latticechallenge.org/lwe_challenge/challenge.php)
+- [Numerical Computing with Rust on CPU](https://plmlab.math.cnrs.fr/grasland/numerical-rust-cpu)
+- [LWE Challenge by TU Darmstadt](https://www.latticechallenge.org/lwe_challenge/challenge.php)
