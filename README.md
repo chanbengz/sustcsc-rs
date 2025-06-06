@@ -58,6 +58,11 @@ pub(crate) fn solve_lwe(
 
 [![](https://img.shields.io/badge/Rust-1.87-red?style=flat)](https://www.rust-lang.org)
 
+> [!NOTE]
+> Special note: if you require nightly features and have a demand for changes in the evaluation environment,
+> please contact us and we can have a discussion. Latest changes in environment will be announced in the
+> official group.
+
 See https://sustcsc25.benx.dev/setup/00-overview.html for setup instructions.
 
 If having trouble with the setup or machine, please contact us.
@@ -68,10 +73,9 @@ You can only modify the `src/solver.rs` file, which contains the function `solve
 the same. Any external crates are allowed, but you should not use any crates including FFI or binding.
 
 We'll be testing your code with 
-- the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/),
-with a single node and Intel Xeon Platinum 2680-v3 (24 core)/6148 (40 core),
-no GPU or other accelerators.
-- Maximum runtime is $T = 30$ minutes
+- the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/), with a single node and Intel 
+Xeon Platinum 2680-v3 (24 core)/6148 (40 core), no GPU or other accelerators.
+- Maximum runtime is $T = 30$ minutes. Any exceeding runtime will be considered as a failure.
 
 ### Compilation
 
@@ -84,7 +88,17 @@ If you prefer a nightly build, please state it clearly at the documentation (REA
 ### Forbidden
 
 > [!WARNING]
-> FFI and binding are banned, while one can insert inline assembly. Keep your unsafe code minimal. 
+> Keep your unsafe code minimal.
+
+You should not
+- output a constant or random vector
+- use FFI or binding to other languages
+- nor external crates that contain FFI or binding to other languages
+    - if you do so, your code may failed to compile because of the environment
+    - this will be manually checked by us
+
+You can do the following
+- insert inline assembly code, but make sure it is supported by the target CPU
 
 ### Test Cases and Grading (87%)
 
@@ -100,7 +114,9 @@ If you prefer a nightly build, please state it clearly at the documentation (REA
 | 7         | 30 | 1000 | 3079  | 0.010  | 15    |
 | 8         | 40 | 1500 | 6151  | 0.010  | 17    |
 
-### Report (15%)
+Formula to be determined.
+
+### Report (13%)
 
 Your report, in English or Chinese, should be a PDF file compiled by $\LaTeX$, markdown,
 Typst or any other format that generates PDF.
@@ -121,10 +137,10 @@ Your report is evaluated by the following rubrics:
     - Full of nonsense and errors -> 0 pt.
     - Rich in content, but hard to understand -> 3 pt.
     - Comprehensive and concise -> 5 pt.
-- **Illustration (5 pt)**: The report contains figures, tables, or other illustrations to help explain your ideas.
+- **Illustration (3 pt)**: The report contains figures, tables, or other illustrations to help explain your ideas.
     - No figures, and full of text -> 0 pt.
-    - Some figures, but mostly referred from other sources or poorly designed -> 3 pt.
-    - Figures are well-designed by yourself and help explain your ideas -> 5 pt.
+    - Some figures, but mostly referred from other sources or poorly designed -> 1 pt.
+    - Figures are well-designed by yourself and help explain your ideas -> 3 pt.
 
 ## Submission
 
@@ -156,19 +172,19 @@ which will be executed on the HPC platform every Tuesday and Friday.
 So the report is not required during the contest period and will discarded.
 Result and ranking are announced at the official group/website.
 
-To submit your code, please send a email to `chanben04gz [AT] gmail.com` with the subject
-"[SUSTCSC 25] Submission - <your teamid>" and attach your code. You can submit multiple times
+To submit your code, please send an email to `chanben04gz [AT] gmail.com` with the subject
+`[SUSTCSC 25] Submission - <your teamid>` and attach your code. You can submit multiple times
 before the evaluation, but only the latest submission will be considered.
 
 > [!NOTE]
 > If your submission is failed to compile or run, we will not give any feedback or score.
 
-### Post-Contest
+### Final Submission
 
 Submit your code and report to the same email address with the subject
-"[SUSTCSC 25] Final Submission - <your teamid>" with compressed file named
+`[SUSTCSC 25] Final Submission - <your teamid>` with compressed file named
 `sustcsc25-rs-final-<your teamid>.*`, before the ending of the contest period.
-Multiple submissions are allowed, but only the latest submission will be considered.
+Multiple submissions are allowed, but only the latest submission will be accepted.
 
 If you have integrity concerns, please also includes a checksum of the compressed files
 in the email with your checksum algorithm, e.g., `CRC32`, `SHA256`, `MD5`, etc. This is optional,

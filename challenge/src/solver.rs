@@ -13,15 +13,14 @@ use ndarray::{Array1, Array2};
 ///
 /// # Returns
 ///
-/// * `Array1<u64>` - Recovered secret vector s of length n
-#[allow(unused_variables, non_snake_case)]
+/// * `Array1<u64>` - Recovered secret vector s of length m
 pub(crate) fn solve_lwe(
     n: usize,
     m: usize,
     q: u64,
     alpha: f64,
-    a: &Array2<u64>,
+    A: &Array2<u64>,
     b: &Array1<u64>,
 ) -> Array1<u64> {
-    Array1::zeros(m)
+    Array1::zeros(m) // a dummy guess
 }
