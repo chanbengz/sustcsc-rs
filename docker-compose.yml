@@ -8,13 +8,11 @@ services:
       - ./challenge:/root/challenge
     command: >
       bash -c "cargo build --release && cargo run --release"
-    environment:
-      - RUST_BACKTRACE=1
     deploy:
       resources:
         limits:
           cpus: '4'
-          memory: 4G
+          memory: 8G
 
   # Development shell service for interactive development
   dev:
@@ -31,4 +29,17 @@ services:
       resources:
         limits:
           cpus: '4'
-          memory: 4G
+          memory: 8G
+
+  nightly:
+    image: rust:nightly-bookworm
+    working_dir: /root/challenge
+    volumes:
+      - ./challenge:/root/challenge
+    command: >
+      bash -c "cargo build --release && cargo run --release"
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G

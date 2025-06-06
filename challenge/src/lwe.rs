@@ -1,15 +1,15 @@
 use ndarray::{Array1, Array2};
 use ndarray_rand::RandomExt;
-use ndarray_rand::rand_distr::{Uniform, Normal};
 use ndarray_rand::rand::prelude::*;
+use ndarray_rand::rand_distr::{Normal, Uniform};
 
-pub struct LWEInstance {
+pub(crate) struct LWEInstance {
     pub a: Array2<u64>,
     pub b: Array1<u64>,
     pub s: Array1<u64>,
 }
 
-pub fn generate_lwe_instance(n: usize, m: usize, q: u64, alpha: f64) -> LWEInstance {
+pub(crate) fn generate_lwe_instance(n: usize, m: usize, q: u64, alpha: f64) -> LWEInstance {
     let mut rng = thread_rng();
     let sigma = alpha * q as f64;
 

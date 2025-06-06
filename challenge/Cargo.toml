@@ -7,3 +7,9 @@ edition = "2024"
 ndarray = "0.16.1"
 ndarray-rand = "0.15.0"
 rand = "0.9.1"
+
+[build]
+rustflags = ["-C", "target-cpu=native"]
+
+[profile.release]
+opt-level = 1

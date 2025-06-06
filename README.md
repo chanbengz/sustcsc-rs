@@ -1,7 +1,7 @@
 # SUSTCSC 2025 - Rust for HPC
 
 > [!NOTE]
-> Designer: Ben Chen \<chenb2022@mail.sustech.edu.cn\>
+> Contact: Ben Chen \<chenb2022@mail.sustech.edu.cn\>
 > 
 > Platform: Xeon Platinum CPU
 
@@ -9,56 +9,122 @@
 
 In this repos you'll find:
 - [Starter's Code](./challenge):  LWE challenge with a sample BKW solver.
-- [Handout](./handout): CI/CD will automatically build sites with `mdbook`, so you find it [here](https://sustcsc25.benx.dev).
+- [Handout](./handout): CI/CD will automatically build sites with `mdbook`,
+    so you find it [here](https://sustcsc25.benx.dev).
 
 ## Description
 
-Learning With Errors (LWE) is a hard problem in lattice-based cryptography invented for the post-quantum era.
-The LWE problem is to find a secret vector $\mathbf{s} \in \mathbb{Z}_q^n$ given a set of noisy linear equations of the form
+Years ago, quantum computers were just a theoretical concept, but now they are becoming a reality. 
+The devil quantum computers can break most of the cryptographic systems we use today, compromising
+our data security. To fight against it, people rise up and design new cryptographic systems that are
+resistant to quantum attacks, one of which is the Learning with Errors (LWE) problem. The LWE problem
+is to find a secret vector $\mathbf{s} \in \mathbb{Z}_q^n$ given a set of noisy linear equations of 
+the form
 
 $$
 \mathbf{A} \cdot \mathbf{s} + e = b \mod q
 $$
 
-where $\mathbf{A} \in \mathbb{Z}_q^{m \times n}$ is a matrix, $e$ is a noise vector,
- and $b$ is the result vector. We call $\mathbf{A}$ the lattice basis, $e$ the noise, and $b$ the ciphertext. The LWE problem is hard to solve when the noise is small compared to the modulus $q$.
+where $\mathbf{A} \in \mathbb{Z}_q^{m \times n}$ is a matrix, $e$ is a noise vector, and $b$ is the result 
+vector. We call $\mathbf{A}$ the lattice basis, $e$ the noise, and $b$ the ciphertext. The LWE problem is hard to solve when the noise is small compared to the modulus $q$. This problem is currently a NP-hard
+problem, and it is believed to be secure against quantum attacks.
 
-In this challenge, 
+Agent rustaceans, the time has come to prove your worth in the world of cryptography. Break LWE with your
+excellent Rust skills and help improve the security of our systems.
+
+Your challenge, should you choose to accept it, is to implement a solver for the LWE problem in Rust.
 
 To evaluate the performance of your code, we will use the following metrics:
 - You have to solve each given LWE problem with a upper bound of computation time $T$.
 - If you finish all the tasks in the given time, the faster the better.
+- You cannot and should not recover an accurate solution, but the closer you get to the original secret vector $\mathbf{s}$, the higher your score will be.
+
+You will asked to implement the following function in `src/solver.rs`:
+
+```rust
+pub(crate) fn solve_lwe(
+    n: usize,
+    m: usize,
+    q: u64,
+    alpha: f64,
+    a: &Array2<u64>,
+    b: &Array1<u64>,
+) -> Array1<u64> {
+    Array1::zeros(m) // make a dummy guess
+}
+```
 
 ## Environment
 
-See https://sustcsc25.benx.dev/setup/00-overview.html for setup instructions.
+[![](https://img.shields.io/badge/Rust-1.87-red?style=flat)](https://www.rust-lang.org)
 
-TBD
+See https://sustcsc25.benx.dev/setup/00-overview.html for setup instructions.
 
 If having trouble with the setup or machine, please contact us.
 
-## Benchmarking
+## Rules and Benchmarking
 
-> [!WARNING]
-> FFI and binding are banned, while one can insert inline assembly. Keep your unsafe code minimal.
-> 
-> We will benchmark your code in a docker container with native CPU but no GPU support. So don't try
-> to use Rust-CUDA or any other GPU libraries. Container has not internet access, so don't try to accelerate
-> your code by remote machines, whereas you can use crates. 
-> 
-> Build scripts are not allowed as it's counted in compilation time.
+You can only modify the `src/solver.rs` file, which contains the function `solve_lwe` that you need to implement. Any helper functions or modules can be added, but the public function signature must remain 
+the same. Any external crates are allowed, but you should not use any crates including FFI or binding.
 
-### Test Cases
-
-TBD
+We'll be testing your code with 
+- the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/),
+with a single node and Intel Xeon Platinum 2680-v3 (24 core)/6148 (40 core),
+no GPU or other accelerators.
+- Maximum runtime is $T = 30$ minutes
 
 ### Compilation
 
-TBD
+Your code is compiled with `release` profile under
+- `opt-level = 1`
+- `-C target-cpu=native`
 
-### Grading
+If you prefer a nightly build, please state it clearly at the documentation (README or report).
 
-TBD
+### Forbidden
+
+> [!WARNING]
+> FFI and binding are banned, while one can insert inline assembly. Keep your unsafe code minimal. 
+
+### Test Cases and Grading (87%)
+
+| Test Case | n  | m    | q     | α      | Score |
+|-----------|----|------|-------|--------|-------|
+| 0         | 10 | 100  | 97    | 0.005  | 2     |
+| 1         | 20 | 400  | 193   | 0.005  | 3     |
+| 2         | 30 | 900  | 389   | 0.005  | 5     |
+| 3         | 40 | 1500 | 769   | 0.005  | 7     |
+| 4         | 45 | 1700 | 12289 | 0.005  | 9     |
+| 5         | 50 | 2500 | 1543  | 0.005  | 11    |
+| 6         | 55 | 3600 | 6151  | 0.005  | 13    |
+| 7         | 30 | 1000 | 3079  | 0.010  | 15    |
+| 8         | 40 | 1500 | 6151  | 0.010  | 17    |
+
+### Report (15%)
+
+Your report, in English or Chinese, should be a PDF file compiled by $\LaTeX$, markdown,
+Typst or any other format that generates PDF.
+
+And it may include:
+- Your optimization strategy, e.g., algorithm improvements, hardware features, etc.
+- Performance analysis, e.g., profiling, flamegraph, etc.
+
+You should clearly state references of the documents you read including, Academic papers,
+Wikipedia, Blog posts and etc.
+
+Your report is evaluated by the following rubrics:
+- **Innovation (5 pt)**: Adapt code from existing libraries, or come up with new ideas.
+    - Plagiarism, i.e., copying without citation -> 0 pt.
+    - Improvement or implementation of algorithms -> 3 pt.
+    - New algorithms or techniques -> 5 pt.
+- **Expression (5 pt)**: The report is concise and intuitive. It doesn't have to be long, but it should be clear.
+    - Full of nonsense and errors -> 0 pt.
+    - Rich in content, but hard to understand -> 3 pt.
+    - Comprehensive and concise -> 5 pt.
+- **Illustration (5 pt)**: The report contains figures, tables, or other illustrations to help explain your ideas.
+    - No figures, and full of text -> 0 pt.
+    - Some figures, but mostly referred from other sources or poorly designed -> 3 pt.
+    - Figures are well-designed by yourself and help explain your ideas -> 5 pt.
 
 ## Submission
 
@@ -68,26 +134,51 @@ You have to submit your code along with a report by
 
 Submitted files may look like
 ```
-/sustcsc25-<your teamid>
-├── challenge
-│   ├── Cargo.lock
-│   ├── Cargo.toml
-│   └── src
-│       ├── lwe.rs    # Encrypt/Decrypt Oracle
-│       ├── solver.rs # Your solver
-│       └── main.rs   # We ignore your main.rs since its judge
+/sustcsc25-rs-<your teamid>
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   ├── lwe.rs    # Encrypt/Decrypt Oracle
+│   ├── solver.rs # Your solver
+│   └── main.rs   # We ignore your main.rs since its judge
 ├── README.md # Tell us about how to run your code
 └── report.pdf
 ```
 
-### Report
+Do not compress the outer directory.
+Rename your compressed file to `sustcsc25-rs-<your teamid>.*` with `<your teamid>` being your team ID
+and `*` being the file extension of your compressed file.
 
-Your report, in English or Chinese, should be a PDF file compiled by $\LaTeX$, markdown,
-Typst or any other format that generates PDF.
+### During the Contest
 
-And it may include:
-- Your optimization strategy, e.g., algorithm improvements, hardware features, etc.
-- Performance analysis, e.g., profiling, flamegraph, etc.
+We only evaluate the performance (87% of the score) in this period,
+which will be executed on the HPC platform every Tuesday and Friday.
+So the report is not required during the contest period and will discarded.
+Result and ranking are announced at the official group/website.
+
+To submit your code, please send a email to `chanben04gz [AT] gmail.com` with the subject
+"[SUSTCSC 25] Submission - <your teamid>" and attach your code. You can submit multiple times
+before the evaluation, but only the latest submission will be considered.
+
+> [!NOTE]
+> If your submission is failed to compile or run, we will not give any feedback or score.
+
+### Post-Contest
+
+Submit your code and report to the same email address with the subject
+"[SUSTCSC 25] Final Submission - <your teamid>" with compressed file named
+`sustcsc25-rs-final-<your teamid>.*`, before the ending of the contest period.
+Multiple submissions are allowed, but only the latest submission will be considered.
+
+If you have integrity concerns, please also includes a checksum of the compressed files
+in the email with your checksum algorithm, e.g., `CRC32`, `SHA256`, `MD5`, etc. This is optional,
+and we will check that for you. Any unmatched checksum will be notified and disgarded.
+
+## Hints
+
+See https://sustcsc25.benx.dev/lwe/01-hints.html for optimization advices.
+
+For a crash course on Rust, see https://sustcsc25.benx.dev/rustup/00-first-look.html.
 
 ## Reference
 
