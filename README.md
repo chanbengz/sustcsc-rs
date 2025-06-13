@@ -26,7 +26,8 @@ $$
 $$
 
 where $\mathbf{A} \in \mathbb{Z}_q^{m \times n}$ is a matrix, $e$ is a noise vector, and $b$ is the result 
-vector. We call $\mathbf{A}$ the lattice basis, $e$ the noise, and $b$ the ciphertext. The LWE problem is hard to solve when the noise is small compared to the modulus $q$. This problem is currently a NP-hard
+vector. We call $\mathbf{A}$ the lattice basis, $e$ the noise, and $b$ the ciphertext. The LWE problem is
+hard to solve when the noise is small compared to the modulus $q$. This problem is currently a NP-hard
 problem, and it is believed to be secure against quantum attacks.
 
 Agent rustaceans, the time has come to prove your worth in the world of cryptography. Break LWE with your
@@ -35,11 +36,10 @@ excellent Rust skills and help improve the security of our systems.
 Your challenge, should you choose to accept it, is to implement a solver for the LWE problem in Rust.
 
 To evaluate the performance of your code, we will use the following metrics:
-- You have to solve each given LWE problem with a upper bound of computation time $T$.
+- Solving given LWE problem(s) with a upper bound of computation time $T$. You will get as many score as
+  how far you can go within this limit.
+- You should output a vector $\hat{s} \in \mathbb{Z}_q^n$ that is exactly the secret vector $\mathbf{s}$.
 - If you finish all the tasks in the given time, the faster the better.
-- You cannot and should not recover an accurate solution, but the closer you get to the original secret vector $\mathbf{s}$, the higher your score will be.
-
-You will asked to implement the following function in `src/solver.rs`:
 
 ```rust
 pub(crate) fn solve_lwe(
@@ -50,18 +50,23 @@ pub(crate) fn solve_lwe(
     a: &Array2<u64>,
     b: &Array1<u64>,
 ) -> Array1<u64> {
-    Array1::zeros(m) // make a dummy guess
+    Array1::zeros(n) // make a dummy guess
 }
 ```
 
+To accomplish this task, you can either by tuning the existing BKW solver or implementing a new one.
+It will be super cool if you did both.
+
 ## Environment
 
-[![](https://img.shields.io/badge/Rust-1.87-red?style=flat)](https://www.rust-lang.org)
+[![](https://img.shields.io/badge/Rust-1.87-red?style=flat&logo=rust)](https://www.rust-lang.org)
 
 > [!NOTE]
-> Special note: if you require nightly features and have a demand for changes in the evaluation environment,
-> please contact us and we can have a discussion. Latest changes in environment will be announced in the
-> official group.
+> Special note: 
+> if you require nightly features and have a demand for changes in the evaluation environment, LMK.
+> Latest changes in environment will be announced in the official group. Please make sure when
+> you submit a `Dockerfile` that contains your required environment, otherwise we will run it with 
+> the default `Dockerfile` in this repository.
 
 See https://sustcsc25.benx.dev/setup/00-overview.html for setup instructions.
 
@@ -69,12 +74,13 @@ If having trouble with the setup or machine, please contact us.
 
 ## Rules and Benchmarking
 
-You can only modify the `src/solver.rs` file, which contains the function `solve_lwe` that you need to implement. Any helper functions or modules can be added, but the public function signature must remain 
-the same. Any external crates are allowed, but you should not use any crates including FFI or binding.
+You can only modify the `src/solver.rs` file, which contains the function `solve_lwe` that you need to implement. 
+Any helper functions or modules can be added, but the signature of public function must remain the same. Any external
+crates are allowed, but you should not use any crates including FFI or binding.
 
 We'll be testing your code with 
 - the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/), with a single node and Intel 
-Xeon Platinum 2680-v3 (24 core)/6148 (40 core), no GPU or other accelerators.
+  Xeon Platinum 2680-v3 (24 core)/6148 (40 core), no GPU or other accelerators.
 - Maximum runtime is $T = 30$ minutes. Any exceeding runtime will be considered as a failure.
 
 ### Compilation
@@ -92,10 +98,9 @@ If you prefer a nightly build, please state it clearly at the documentation (REA
 
 You should not
 - output a constant or random vector
-- use FFI or binding to other languages
-- nor external crates that contain FFI or binding to other languages
+- use any external help using command line, but FFI is allowed
     - if you do so, your code may failed to compile because of the environment
-    - this will be manually checked by us
+    - ensure that you update the `Cargo.toml` and (`Dockerfile` or document)
 
 You can do the following
 - insert inline assembly code, but make sure it is supported by the target CPU
@@ -111,17 +116,21 @@ You can do the following
 | 4         | 45 | 1700 | 12289 | 0.005  | 9     |
 | 5         | 50 | 2500 | 1543  | 0.005  | 11    |
 | 6         | 55 | 3600 | 6151  | 0.005  | 13    |
-| 7         | 30 | 1000 | 3079  | 0.010  | 15    |
-| 8         | 40 | 1500 | 6151  | 0.010  | 17    |
+| 7         | 30 | 1000 | 3079  | 0.010  | 17    |
+| 8         | 40 | 1500 | 6151  | 0.010  | 19    |
+|           |    |      |       | Total  | 86    |
 
-Formula to be determined.
+For each case, error is calculated as
 
-### Report (13%)
+$$
+\text{error} = \sum_{i=0}^{n-1} \left| s_i - \hat{s}_i \right| = 0
+$$
+
+### Report (14%)
 
 Your report, in English or Chinese, should be a PDF file compiled by $\LaTeX$, markdown,
-Typst or any other format that generates PDF.
+Typst or any other format that generates PDF. And it may include:
 
-And it may include:
 - Your optimization strategy, e.g., algorithm improvements, hardware features, etc.
 - Performance analysis, e.g., profiling, flamegraph, etc.
 
@@ -131,16 +140,16 @@ Wikipedia, Blog posts and etc.
 Your report is evaluated by the following rubrics:
 - **Innovation (5 pt)**: Adapt code from existing libraries, or come up with new ideas.
     - Plagiarism, i.e., copying without citation -> 0 pt.
-    - Improvement or implementation of algorithms -> 3 pt.
-    - New algorithms or techniques -> 5 pt.
+    - Improvement or implementation of algorithms -> 1 - 4 pt.
+    - New techniques or algorithm (it's really cool) -> 5 pt.
 - **Expression (5 pt)**: The report is concise and intuitive. It doesn't have to be long, but it should be clear.
     - Full of nonsense and errors -> 0 pt.
-    - Rich in content, but hard to understand -> 3 pt.
+    - Rich in content, but hard to understand -> 1 - 4 pt.
     - Comprehensive and concise -> 5 pt.
-- **Illustration (3 pt)**: The report contains figures, tables, or other illustrations to help explain your ideas.
+- **Illustration (4 pt)**: The report contains figures, tables, or other illustrations to help explain your ideas.
     - No figures, and full of text -> 0 pt.
-    - Some figures, but mostly referred from other sources or poorly designed -> 1 pt.
-    - Figures are well-designed by yourself and help explain your ideas -> 3 pt.
+    - Some figures, but mostly referred from other sources or poorly designed -> 1 - 3 pt.
+    - Figures are well-designed by yourself and help explain your ideas -> 4 pt.
 
 ## Submission
 
@@ -153,11 +162,12 @@ Submitted files may look like
 /sustcsc25-rs-<your teamid>
 ├── Cargo.lock
 ├── Cargo.toml
-├── src
-│   ├── lwe.rs    # Encrypt/Decrypt Oracle
+├── Dockerfile    # Optional, if you have a custom environment
+├── src           # You can add any code here
+│   ├── lwe.rs    # Encrypt Oracle
 │   ├── solver.rs # Your solver
 │   └── main.rs   # We ignore your main.rs since its judge
-├── README.md # Tell us about how to run your code
+├── README.md     # Tell us about how to run your code
 └── report.pdf
 ```
 
@@ -194,7 +204,7 @@ and we will check that for you. Any unmatched checksum will be notified and disg
 
 See https://sustcsc25.benx.dev/lwe/01-hints.html for optimization advices.
 
-For a crash course on Rust, see https://sustcsc25.benx.dev/rustup/00-first-look.html.
+For crash course on Rust, see https://sustcsc25.benx.dev/rustup/00-first-look.html.
 
 ## Reference
 
