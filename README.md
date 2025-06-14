@@ -8,7 +8,7 @@
 ## Structure
 
 In this repos you'll find:
-- [Starter's Code](./challenge):  LWE challenge with a sample BKW solver.
+- [Starter's Code](./challenge):  LWE challenge with a sample solver.
 - [Handout](./handout): CI/CD will automatically build sites with `mdbook`,
     so you find it [here](https://sustcsc25.benx.dev).
 
@@ -54,7 +54,7 @@ pub(crate) fn solve_lwe(
 }
 ```
 
-To accomplish this task, you can either by tuning the existing BKW solver or implementing a new one.
+To accomplish this task, you can either by tuning the existing solver or implementing a new one.
 It will be super cool if you did both.
 
 ## Environment
@@ -105,7 +105,7 @@ You should not
 You can do the following
 - insert inline assembly code, but make sure it is supported by the target CPU
 
-### Test Cases and Grading (87%)
+### Test Cases and Grading (86%)
 
 | Test Case | n  | m    | q     | α      | Score |
 |-----------|----|------|-------|--------|-------|
@@ -210,3 +210,5 @@ For crash course on Rust, see https://sustcsc25.benx.dev/rustup/00-first-look.ht
 
 - [Numerical Computing with Rust on CPU](https://plmlab.math.cnrs.fr/grasland/numerical-rust-cpu)
 - [LWE Challenge by TU Darmstadt](https://www.latticechallenge.org/lwe_challenge/challenge.php)
+- [Attacks on LWE](https://www.maths.ox.ac.uk/system/files/attachments/lattice-reduction-and-attacks.pdf)
+- [LLL implementation in Rust](https://github.com/murcoutinho/LLL)
