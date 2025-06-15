@@ -39,6 +39,7 @@ To evaluate the performance of your code, we will use the following metrics:
 - Solving given LWE problem(s) with a upper bound of computation time $T$. You will get as many score as
   how far you can go within this limit.
 - You should output a vector $\hat{s} \in \mathbb{Z}_q^n$ that is exactly the secret vector $\mathbf{s}$.
+  - or output a vector $\hat{b}$ that is close enough to $A * \mathbf{s}$.
 - If you finish all the tasks in the given time, the faster the better.
 
 ```rust

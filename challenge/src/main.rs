@@ -22,6 +22,7 @@ fn main() {
     ];
 
     let mut score = 0;
+    let mut total = 0;
     println!("    #     n      m       q   alpha   error norm   time (s)  pass");
     println!("----- ----- ------ ------- ------- ------------ ---------- -----");
 
@@ -32,10 +33,13 @@ fn main() {
         let duration = start.elapsed();
         let error_norm = compute_error_norm(&instance.s, Array1::zeros(n), q);
 
-        // let pass = validate_solution(&instance.s, &s_pred, q);
-        let pass = validate_solution(&instance.a.dot(&instance.s), &s_pred, q);
-
+        let pass = if s_pred.len() == n {
+            validate_solution(&instance.s, &s_pred, q)
+        } else {
+            validate_solution(&instance.a.dot(&instance.s), &s_pred, q)
+        };
         score += if pass { cur_score } else { 0 };
+        total += duration.as_secs_f64() as usize;
 
         println!(
             "{:5} {:5} {:6} {:7} {:7.3} {:12.4} {:10.4}  {}",
@@ -49,7 +53,7 @@ fn main() {
             if pass { "PASS" } else { "FAIL" }
         );
     }
-    println!("Total score: {}", score);
+    println!("Total score: {}\ttime: {}", score, total);
 }
 
 fn validate_solution(s_true: &Array1<u64>, s_pred: &Array1<u64>, q: u64) -> bool {

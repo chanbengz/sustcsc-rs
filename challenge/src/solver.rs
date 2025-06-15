@@ -1,5 +1,4 @@
-use std::ops::Div;
-
+use std::ops::{Add, Sub, Mul, Div, Neg};
 use crate::lll::{self, VecLinearAlgebra};
 use ndarray::{Array1, Array2, Axis, concatenate};
 
@@ -31,8 +30,9 @@ pub(crate) fn solve_lwe(
     let b = b.mapv(|x| x as f64);
     let br = babai_nearest_vector(&M, &b);
 
-    // solve A * s = br mod q
-
+    // this solution requires solving a tall matrix under modulo q
+    // the solutions are not unique, so we take the one that is closest to the original
+    // vector b, which is the result of the LWE problem
     br.into_iter()
         .map(|x| (x.round() as u64).rem_euclid(q))
         .collect::<Array1<u64>>()
