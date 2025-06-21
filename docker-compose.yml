@@ -12,21 +12,21 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4'
+          cpus: '16'
           memory: 8G
 
   # Run the challenge in a nightly Rust environment
   nightly:
-    image: rust:nightly-bookworm
+    image: rustlang/rust:nightly
     working_dir: /root/challenge
     volumes:
       - ./challenge:/root/challenge
     command: >
-      bash -c "cargo build --release && cargo run --release"
+      bash -c "cargo +nightly build --release && cargo +nightly run --release"
     deploy:
       resources:
         limits:
-          cpus: '4'
+          cpus: '16'
           memory: 8G
 
   # Development shell service for interactive development
@@ -46,5 +46,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4'
+          cpus: '16'
           memory: 8G

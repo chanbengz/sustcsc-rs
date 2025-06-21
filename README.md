@@ -69,7 +69,8 @@ As the computation is costly, you will need to optimize the code and _compilatio
 
 ## Environment
 
-[![](https://img.shields.io/badge/Rust-1.87-red?style=flat&logo=rust)](https://www.rust-lang.org)
+[![](https://img.shields.io/badge/Rust-1.87-orange?style=flat&logo=rust)](https://www.rust-lang.org)
+[![](https://img.shields.io/badge/Rust-nightly-red?style=flat&logo=rust)](https://www.rust-lang.org)
 
 > [!NOTE]
 > Special note: 
@@ -88,7 +89,7 @@ Any code except for the judge code must be written in Rust, and you can use any 
 You cannot touch the judge code, which is the `main.rs`, but anything else is free to go.
 
 We'll be testing your code with the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/) with
-- a single node with Intel Xeon Xeon Silver 4314 (2.40GHz * 16 core * 2 sockets)
+- a single node with Intel Xeon Xeon Silver 4314 (2.40GHz * 20 core * 2 sockets)
 - (or) a single node with Intel Xeon Platinum 8175M (2.5 GHz * 24 core * 2 sockets)
 - no GPU or other accelerators.
 
@@ -108,7 +109,7 @@ If you prefer a nightly build, please state it clearly at the documentation (REA
 > Keep your unsafe code minimal.
 
 You should not
-- output a constant or random results
+- remove the FHE encryption/decryption
 - use any external help using command line, but FFI is allowed
     - if you do so, your code may failed to compile because of the environment
     - ensure that you update the `Cargo.toml` and (`Dockerfile` or document)
@@ -121,15 +122,19 @@ You can do the following
 | Test Case | m  | n    | steps | time (s) | Score |
 |-----------|----|------|-------|----------|-------|
 | 0         | 3  | 3    | 1     | 7.0      | 2     |
-| 1         | 5  | 5    | 1     | 11.0     | 3     |
-| 2         | 5  | 5    | 2     | 20.0     | 5     |
-| 3         | 7  | 7    | 2     | 29.0     | 7     |
-| 4         | 7  | 7    | 4     | 55.0     | 9     |
-| 5         | 8  | 10   | 4     | 79.0     | 11    |
-| 6         | 10 | 12   | 4     | 100.0    | 13    |
+| 1         | 5  | 5    | 1     | 10.0     | 3     |
+| 2         | 5  | 5    | 2     | 15.0     | 5     |
+| 3         | 7  | 7    | 2     | 21.0     | 7     |
+| 4         | 7  | 7    | 4     | 39.0     | 9     |
+| 5         | 8  | 10   | 4     | 70.0     | 11    |
+| 6         | 10 | 12   | 4     | 96.0     | 13    |
 | 7         | 15 | 15   | 4     | 128.0    | 17    |
-| 8         | 17 | 17   | 5     | 256.0    | 19    |
+| 8         | 17 | 17   | 5     | 196.0    | 19    |
 |           |    |      |       | Total    | 86    |
+
+For each test case, you will be given a random grid of size $m \times n$ and 
+a number of steps to run the game of life. Every test case is considered passed if
+and only if the `verify` function returns `true` under the given running time.
 
 ### Report (14%)
 
@@ -187,7 +192,7 @@ $$
 \text{error} = \sum_{i=0}^{n-1} \left| s_i - \hat{s}_i \right| = 0
 $$
 
-The bonus points directly go to your final score.
+This part will be run within 30 mins. The bonus points directly go to your final score.
 
 ## Submission
 
@@ -208,40 +213,12 @@ Submitted files may look like
 │   ├── client.rs # Client code *
 │   ├── server.rs # Server code *
 │   └── main.rs   # We ignore your main.rs since its judge
-├── README.md     # Tell us about how to run your code
-└── report.pdf
+└── README.md     # Tell us about how to run your code
 ```
 
 _* indicates you can modify this file_
 
-Do not compress the outer directory.
-Rename your compressed file to `sustcsc25-rs-<your teamid>.*` with `<your teamid>` being your team ID
-and `*` being the file extension of your compressed file.
-
-### During the Contest
-
-We only evaluate the performance (86% of the score) in this period,
-which will be executed on the HPC platform every Tuesday and Friday.
-So the report is not required during the contest period and will discarded.
-Result and ranking are announced at the official group/website.
-
-To submit your code, please send an email to `chanben04gz [AT] gmail.com` with the subject
-`[SUSTCSC 25] Submission - <your teamid>` and attach your code. You can submit multiple times
-before the evaluation, but only the latest submission will be considered.
-
-> [!NOTE]
-> If your submission is failed to compile or run, we will not give any feedback or score.
-
-### Final Submission
-
-Submit your code and report to the same email address with the subject
-`[SUSTCSC 25] Final Submission - <your teamid>` with compressed file named
-`sustcsc25-rs-final-<your teamid>.*`, before the ending of the contest period.
-Multiple submissions are allowed, but only the latest submission will be accepted.
-
-If you have integrity concerns, please also includes a checksum of the compressed files
-in the email with your checksum algorithm, e.g., `CRC32`, `SHA256`, `MD5`, etc. This is optional,
-and we will check that for you. Any unmatched checksum will be notified and disgarded.
+See https://handicraft-computing-team.github.io/sustcsc-doc/pages/intro/basic.html
 
 ## Hints
 

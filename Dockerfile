@@ -3,10 +3,12 @@ FROM rust:1.87.0-bookworm
 # or nightly
 # FROM rustlang/rust:nightly
 
-COPY ./challenge /root/challenge
-COPY ./.cargo /root/challenge/.cargo
-WORKDIR /root/challenge
+COPY ./challenge /challenge
+COPY ./.cargo /challenge/.cargo
+WORKDIR /challenge
 
-RUN cargo build --release
+RUN cargo build --release && \
+    cp ./target/release/sustcsc-rs ./ && cargo clean && \
+    chmod +x ./sustcsc-rs
 
-ENTRYPOINT [ "cargo", "run", "--release" ]
+ENTRYPOINT [ "./sustcsc-rs" ]
