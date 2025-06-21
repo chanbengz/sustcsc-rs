@@ -87,10 +87,10 @@ If having trouble with the setup or machine, please contact us.
 Any code except for the judge code must be written in Rust, and you can use any libraries from crates.io.
 You cannot touch the judge code, which is the `main.rs`, but anything else is free to go.
 
-We'll be testing your code with 
-- the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/), with a single node and Intel 
-  Xeon Platinum 2680-v3 (24 core)/6148 (40 core), no GPU or other accelerators.
-- Maximum runtime is $T = 30$ minutes. Any exceeding runtime will be considered as a failure.
+We'll be testing your code with the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/) with
+- a single node with Intel Xeon Xeon Silver 4314 (2.40GHz * 16 core * 2 sockets)
+- (or) a single node with Intel Xeon Platinum 8175M (2.5 GHz * 24 core * 2 sockets)
+- no GPU or other accelerators.
 
 ### Compilation
 
@@ -118,19 +118,18 @@ You can do the following
 
 ### Test Cases and Grading (86%)
 
-
-| Test Case | m  | n    | steps | time   | Score |
-|-----------|----|------|-------|--------|-------|
-| 0         |  |  |   | 0  | 2     |
-| 1         |  |  |   | 0  | 3     |
-| 2         |  |  |   | 0  | 5     |
-| 3         |  |  |   | 0  | 7     |
-| 4         |  |  |   | 0  | 9     |
-| 5         |  |  |   | 0  | 11    |
-| 6         |  |  |   | 0  | 13    |
-| 7         |  |  |   | 0  | 17    |
-| 8         |  |  |   | 0  | 19    |
-|           |    |      |       | Total  | 86    |
+| Test Case | m  | n    | steps | time (s) | Score |
+|-----------|----|------|-------|----------|-------|
+| 0         | 3  | 3    | 1     | 7.0      | 2     |
+| 1         | 5  | 5    | 1     | 11.0     | 3     |
+| 2         | 5  | 5    | 2     | 20.0     | 5     |
+| 3         | 7  | 7    | 2     | 29.0     | 7     |
+| 4         | 7  | 7    | 4     | 55.0     | 9     |
+| 5         | 8  | 10   | 4     | 79.0     | 11    |
+| 6         | 10 | 12   | 4     | 100.0    | 13    |
+| 7         | 15 | 15   | 4     | 128.0    | 17    |
+| 8         | 17 | 17   | 5     | 256.0    | 19    |
+|           |    |      |       | Total    | 86    |
 
 ### Report (14%)
 
