@@ -1,6 +1,6 @@
 # Summary
 
-[Description](about.md)
+[About](about.md)
 
 ---
 

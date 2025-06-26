@@ -89,7 +89,7 @@ Any code except for the judge code must be written in Rust, and you can use any 
 You cannot touch the judge code, which is the `main.rs`, but anything else is free to go.
 
 We'll be testing your code with the clusters on [SUSTech's HPC platform](https://hpc.sustech.edu.cn/) with
-- a single node with Intel Xeon Xeon Silver 4314 (2.40GHz * 20 core * 2 sockets)
+- a single node with Intel Xeon Xeon Platinum 8350C (2.40GHz * 20 core * 2 sockets)
 - (or) a single node with Intel Xeon Platinum 8175M (2.5 GHz * 24 core * 2 sockets)
 - no GPU or other accelerators.
 
@@ -146,6 +146,12 @@ Typst or any other format that generates PDF. And it may include:
 
 You should clearly state references of the documents you read including, Academic papers,
 Wikipedia, Blog posts and etc.
+
+> [!WARNING]
+> Don't use too much AI-generated content, because we do read your report ourselves.
+> The committee members are experienced in identifying AI-generated content,
+> and if we find too much AI-generated content in your report, we will give zero to either
+> of these rubrics below.
 
 Your report is evaluated by the following rubrics:
 - **Innovation (5 pt)**: Adapt code from existing libraries, or come up with new ideas.

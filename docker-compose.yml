@@ -12,8 +12,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '16'
-          memory: 8G
+          cpus: '40'
+          memory: 16G
 
   # Run the challenge in a nightly Rust environment
   nightly:
@@ -22,12 +22,12 @@ services:
     volumes:
       - ./challenge:/root/challenge
     command: >
-      bash -c "cargo +nightly build --release && cargo +nightly run --release"
+      bash -c "cargo +nightly build --release && cargo run --release"
     deploy:
       resources:
         limits:
-          cpus: '16'
-          memory: 8G
+          cpus: '40'
+          memory: 16G
 
   # Development shell service for interactive development
   # If you dont have a local Rust toolchain installed, 
@@ -35,7 +35,7 @@ services:
   # Make sure you know how to edit files in a container.
   dev:
     image: rust:1.87.0-bookworm
-    working_dir: /usr/src/challenge
+    working_dir: /root/challenge
     volumes:
       - ./challenge:/root/challenge
     command: bash
@@ -46,5 +46,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '16'
-          memory: 8G
+          cpus: '40'
+          memory: 16G
