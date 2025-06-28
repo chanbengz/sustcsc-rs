@@ -60,3 +60,75 @@ fn main() {
     println!("z = {}", z);
 }
 ```
+
+## Struct
+
+You can also define your own types using `struct`. A struct is a custom data type that lets you package together related data. Here's an example of a simple struct:
+
+```rust
+struct Point {
+    x: f64,
+    y: f64,
+    pub metadata: String, 
+    // `pub` makes this field accessible outside the module
+}
+```
+
+to create an instance of a struct, you can use the following syntax:
+
+```rust
+fn main() {
+    let p = Point {
+        x: 1.0,
+        y: 2.0,
+        metadata: String::from("A point in 2D space"),
+    };
+    println!("Point: ({}, {}), Metadata: {}", p.x, p.y, p.metadata);
+    //                                        ^^^ not accessible outside the module
+}
+```
+
+## Tuple
+
+Tuple is a fixed-size collection of values of different types. You can create a tuple using parentheses:
+
+```rust
+fn main() {
+    let tuple: (i32, f64, char) = (42, 3.14, 'a');
+    println!("Tuple: ({}, {}, {})", tuple.0, tuple.1, tuple.2);
+}
+```
+
+Tuples are the same typed if all their elements have the same type.
+
+## Enum
+
+Enums are a way to define a type that can be one of several different variants. You can define an enum using the `enum` keyword:
+
+```rust
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+```
+
+You can wrap data in an enum variant:
+
+```rust
+enum Card {
+    Clubs(u8), // Clubs with a value
+    Diamonds(u8), // Diamonds with a value
+    Hearts(u8), // Hearts with a value
+    Spades(u8), // Spades with a value
+}
+
+let card = Card::Hearts(10);
+match card {
+    Card::Clubs(value) => println!("Clubs with value: {}", value),
+    Card::Diamonds(value) => println!("Diamonds with value: {}", value),
+    Card::Hearts(value) => println!("Hearts with value: {}", value),
+    Card::Spades(value) => println!("Spades with value: {}", value),
+}
+```
