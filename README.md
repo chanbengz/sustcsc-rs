@@ -212,10 +212,12 @@ Submitted files may look like
 ├── Cargo.lock
 ├── Cargo.toml    # Cargo manifest *
 ├── Dockerfile    # Optional, if you have a custom environment
+├── bonus         # Bonus challenge
+│   ├── Cargo.toml
+│   └── src
+│       ├── solver.rs
+│       └── main.rs
 ├── src           # You can add any code here
-│   ├── bonus     # Bonus challenge
-│   │   ├── Cargo.toml
-│   │   └── *.rs
 │   ├── client.rs # Client code *
 │   ├── server.rs # Server code *
 │   └── main.rs   # We ignore your main.rs since its judge
