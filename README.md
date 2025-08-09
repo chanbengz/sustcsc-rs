@@ -234,6 +234,31 @@ See https://sustcsc25.benx.dev/lwe/01-hints.html for optimization advices.
 
 For crash course on Rust, see https://sustcsc25.benx.dev/rustup/00-first-look.html.
 
+## Reference Solution
+
+> [!NOTE]
+> 参考自出题时候的设想以及选手们的解法。
+
+### Basic
+
+> 本来是没有这题的, [主办方](https://github.com/Jaredanwolfgang)担心太难了所以将一开始的题目放到Bonus并出了这道"非常简单"的题目。看上去低估了我们的选手。
+>
+> 设计思路是没有的, 主要是让大家熟悉一下Rust。
+
+思路是rayon(多线程) + tfhe-rs 自带的simd选项 + Rust编译优化, 还是非常straightforward。
+
+坑点在于rayon的多线程问题, tfhe-rs有[说明](https://docs.zama.ai/tfhe-rs/fhe-computation/advanced-features/rayon-crate#working-example), 简单地考一下Rust多线程和borrow的知识。
+
+因为benchmark baseline的机器性能比赛事用的机器性能稍弱, 所以题目要求放宽送了一些。预期解法还需要加上一些代码优化, 如替换数据类型(故意用的UInt8, 实际上Bool就够了), 减少密钥位数(因为会降低安全性不推荐, 但允许)
+
+### Bonus
+
+设计的时候想了无数种方案: 本来想出成CTF形式的(即魔改一个LWE让它变得trivial), 但Rust的数学库实在太少了, 对选手们不太友好, 遂放弃; 
+一般来说出一个Rust科学计算最好, 比如Reference里面的Gray-scott reaction diffusion, 但本人数理基础很烂, 此类问题也不好量化成赛题类型, 遂放弃;
+于是想到这个~~简单的线性代数问题, 只需上过线代+一点冲浪自学即可~~的题目, 参数也写的比较小。
+
+~~初始代码能过第一个0分样例, 摆了先不写。~~
+
 ## Reference
 
 - [tfhe-rs](https://github.com/zama-ai/tfhe-rs)
